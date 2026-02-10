@@ -1,35 +1,46 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-
+import AdminLayout from "./components/layout/AdminLayout";
+import Dashboard from "./pages/Dashboard";
+import Tournaments from "./pages/Tournaments";
+import Approvals from "./pages/Approvals";
+import Teams from "./pages/Teams";
+import Players from "./pages/Players";
+import Matches from "./pages/Matches";
+import Financial from "./pages/Financial";
+import AdminUsers from "./pages/AdminUsers";
+import AuditLogs from "./pages/AuditLogs";
+import Settings from "./pages/Settings";
+import NotFound from "./pages/NotFound";
 
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <AdminLayout>
+      <Switch>
+        <Route path="/" component={Dashboard} />
+        <Route path="/tournaments" component={Tournaments} />
+        <Route path="/approvals" component={Approvals} />
+        <Route path="/teams" component={Teams} />
+        <Route path="/players" component={Players} />
+        <Route path="/matches" component={Matches} />
+        <Route path="/financial" component={Financial} />
+        <Route path="/admin-users" component={AdminUsers} />
+        <Route path="/audit-logs" component={AuditLogs} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </AdminLayout>
   );
 }
-
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />
